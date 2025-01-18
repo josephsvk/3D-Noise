@@ -72,13 +72,62 @@
                          | S_G, S_B                |
                          +-------------------------+
 ```
+## Defining Security in the 3D Noise Project
+### Basic Definition of Security
+#### Security in the 3D Noise project is defined as follows:
+Inaccessibility of information from individual layers: Each layer 
+(𝑆𝑅,𝑆𝐺,𝑆𝐵) is meaningless on its own and appears as random noise.
+
+Dependency on combination: The original file can only be reconstructed by combining all three layers (𝐸𝑅,𝐸𝐺,𝐸𝐵).
+
+Reliance on global hash: Without the correct global hash (𝐻) and stabilized hash (𝐻𝑠), decryption is impossible.
+
+### Specific Security Properties
+#### Layer Confidentiality:
+Individual layers do not reveal any meaningful information without the others.
+XOR logic and hashing ensure that each layer is obfuscated and secure.
+#### Resistance to Brute-Force Attacks:
+The hashing mechanism provides a large keyspace, making brute-forcing impractical.
+#### Independence of Layers:
+Combining only two layers (e.g.,𝑆𝑅SR and 𝑆𝐺SG) does not provide any useful information about the original file.
+
+### Protection Against Specific Attacks
+#### Partial Layer Exposure:
+An attacker cannot reconstruct the file without all three layers and the corresponding hashes.
+#### Statistical Analysis:
+The layers are designed to appear as random noise, complicating any frequency or pattern analysis.
+#### Layer Manipulation:
+Modifying a single layer without updating the others renders the file completely unreadable.
+
+### Algorithm-Driven Security
+#### Dependency on Hash:
+The global hash (𝐻) is randomly generated, ensuring unique encryption for each file.
+The stabilized hash (𝐻𝑠) for SB adds another layer of protection.
+#### XOR Logic:
+XOR operations ensure that input data combinations are unique and reversible only with precise inputs.
+
+### Security Limitations
+#### Vulnerability to Coordinated Attacks:
+If an attacker obtains all three layers and the hash, they can reconstruct the original file.
+#### Randomness of Hashing:
+The system relies on the quality of randomness when generating 𝐻.
+
+### Potential Extensions to Improve Security
+**Multi-Hash Dependency**: Introduce multiple layers of hashing for added complexity.
+**Dynamic Weights**: Dynamically generate weights for layers (𝑅,𝐺,𝐵) based on additional inputs.
+**Integration of KDF**: Use Key Derivation Functions (e.g., PBKDF2, Argon2) to enhance resistance to brute-force attacks.
+
+### Summary of Security Definition:
+“The security of the 3D Noise system lies in the impossibility of reconstructing the original file without all three layers and the hash keys. The combination of layers is designed to ensure anonymity and prevent data analysis unless all layers and keys are available.”
+
+
 ## How It Works
 ### 1. Splitting the File
 The input file is divided into three layers:
 - **S_R:** Red layer
 - **S_G:** Green layer
 - **S_B:** Blue layer
-
+   
 ### 2. Generating Hashes
 - A global hash (H) is generated for encryption.
 - A stabilized hash (H_s) for S_B is derived from H:  
