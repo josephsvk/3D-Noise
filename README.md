@@ -3,6 +3,8 @@
 ## Overview
 3D Noise is an innovative encryption method designed for anonymous file sharing and secure data distribution. The core concept involves splitting a file into three distinct layers (S_R, S_G, S_B), which are individually encrypted using XOR logic, hashing, and weights. Each layer alone is meaningless, appearing as random noise, but when combined, they reveal the original file.
 
+![3DNoise](DALL·E 2025-01-18 19.51.11 - A detailed block diagram showing the encryption and decryption process for a file split into three layers (S_R, S_G, S_B). The diagram includes the fo.webp)
+
 ## Features
 - **Layered Encryption:** Files are divided into three layers representing different "colors."
 - **Secure Sharing:** Only the combination of all three layers can decrypt the original file.
@@ -18,13 +20,16 @@ The input file is divided into three layers:
 
 ### 2. Generating Hashes
 - A global hash (H) is generated for encryption.
-- A stabilized hash (H_s) for S_B is derived from H:
+- A stabilized hash (H_s) for S_B is derived from H:  
+ ```
   \[
   H_s[i, j] = \left(H[i, j] + H[n-i-1, j]\right) \mod 256
   \]
+ ```
 
 ### 3. Encrypting Layers
 Each layer is encrypted using XOR logic:
+```markdown
 \[
 E_R[i, j] = S_R[i, j] \oplus H[i, j] \oplus S_G[i, j]
 \]
@@ -35,8 +40,10 @@ E_G[i, j] = S_G[i, j] \oplus H[i, j] \oplus S_B[i, j]
 E_B[i, j] = S_B[i, j] \oplus H_s[i, j] \oplus S_R[i, j]
 \]
 
+```
 ### 4. Decrypting Layers
 The original layers are reconstructed by reversing the encryption process:
+```markdown
 \[
 S_R[i, j] = E_R[i, j] \oplus H[i, j] \oplus E_G[i, j]
 \]
@@ -46,6 +53,7 @@ S_G[i, j] = E_G[i, j] \oplus H[i, j] \oplus E_B[i, j]
 \[
 S_B[i, j] = E_B[i, j] \oplus H_s[i, j] \oplus E_R[i, j]
 \]
+```
 
 ### 5. Reconstructing the File
 All layers are combined to restore the original file.
