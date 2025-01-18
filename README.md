@@ -11,6 +11,69 @@
 - **Anonymous Players:** Users, called "players," choose a layer (color) to share with others.
 - **Hash-Based Security:** Uses global and stabilized hashes to ensure unique encryption for each layer.
 
+```
+                        +-------------------------+
+                        |        Input File       |
+                        +-------------------------+
+                                    |
+                                    v
+                        +-------------------------+
+                        | Split file into layers  |
+                        | S_R, S_G, S_B           |
+                        | (e.g., RGB layers)      |
+                        +-------------------------+
+
+                        +-------------------------+
+                        | Generate Global Hash H  |
+                        | (Randomly generated,    |
+                        | consistent size as      |
+                        | the layers)             |
+                        +-------------------------+
+                                    |
+                                    v
+                        +-------------------------+
+                        | Stabilize Hash for S_B  |
+                        | (H + flipped H) mod 256 |
+                        +-------------------------+
+
+      +-------------------------+         +-------------------------+
+      | Encrypt Layer S_R       |         | Encrypt Layer S_G       |
+      | E_R = XOR(S_R, H, S_G)  |         | E_G = XOR(S_G, H, S_B)  |
+      +-------------------------+         +-------------------------+
+                           \              /
+                              \            /
+                              \          /
+                         +-------------------------+
+                         | Encrypt Layer S_B       |
+                         | E_B = XOR(S_B, Stable H,|
+                         | S_R)                    |
+                         +-------------------------+
+
+                         +-------------------------+
+                         | Output Encrypted Layers |
+                         | E_R, E_G, E_B           |
+                         +-------------------------+
+
+
+      +-------------------------+         +-------------------------+
+      | Decrypt Layer S_R       |         | Decrypt Layer S_G       |
+      | S_R = XOR(E_R, H, E_G)  |         | S_G = XOR(E_G, H, E_B)  |
+      +-------------------------+         +-------------------------+
+                           \              /
+                              \            /
+                              \          /
+                         +-------------------------+
+                         | Decrypt Layer S_B       |
+                         | S_B = XOR(E_B, Stable H,|
+                         | E_R)                    |
+                         +-------------------------+
+
+                         +-------------------------+
+                         | Reconstruct Original    |
+                         | File from Layers S_R,   |
+                         | S_G, S_B                |
+                         +-------------------------+
+```
 ## How It Works
 ### 1. Splitting the File
 The input file is divided into three layers:
@@ -59,7 +122,7 @@ S_B[i, j] = E_B[i, j] \oplus H_s[i, j] \oplus E_R[i, j]
 All layers are combined to restore the original file.
 
 ## Use Cases
-- **Anonymous File Sharing:** Share data securely without revealing content unless all layers are combined.
+- **Anonymous File Sharing:** Share data securely without revealing content unless all layers are combined.python
 - **Decentralized Storage:** Distribute encrypted layers across multiple participants.
 - **Secure Collaboration:** Enable teams to share partial data securely.
 
