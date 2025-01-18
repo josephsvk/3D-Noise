@@ -55,6 +55,8 @@ All layers are combined to restore the original file.
 - **Decentralized Storage:** Distribute encrypted layers across multiple participants.
 - **Secure Collaboration:** Enable teams to share partial data securely.
 
+# No tested only generate 
+
 ## Getting Started
 ### Prerequisites
 - Python 3.x
@@ -63,7 +65,7 @@ All layers are combined to restore the original file.
 ### Installation
 Clone the repository:
 ```bash
-git clone https://github.com/yourusername/3d-noise.git
+git clone https://github.com/josephsvk/3d-noise.git
 cd 3d-noise
 ```
 
