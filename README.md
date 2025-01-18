@@ -3,8 +3,6 @@
 ## Overview
 3D Noise is an innovative encryption method designed for anonymous file sharing and secure data distribution. The core concept involves splitting a file into three distinct layers (S_R, S_G, S_B), which are individually encrypted using XOR logic, hashing, and weights. Each layer alone is meaningless, appearing as random noise, but when combined, they reveal the original file.
 
-![Diagram XOR](https://github.com/josephsvk/3D-Noise/blob/main/DALL%C2%B7E%202025-01-18%2019.51.11%20-%20A%20detailed%20block%20diagram%20showing%20the%20encryption%20and%20decryption%20process%20for%20a%20file%20split%20into%20three%20layers%20(S_R%2C%20S_G%2C%20S_B).%20The%20diagram%20includes%20the%20fo.webp)
-
 ## Features
 - **Layered Encryption:** Files are divided into three layers representing different "colors."
 - **Secure Sharing:** Only the combination of all three layers can decrypt the original file.
