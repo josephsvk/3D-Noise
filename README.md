@@ -1,4 +1,3 @@
-# 3D-Noise
 # 3D Noise: A New Approach to Anonymous File Encryption and Sharing
 
 ## Overview
